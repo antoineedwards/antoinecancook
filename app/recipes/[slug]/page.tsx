@@ -160,6 +160,26 @@ export default async function RecipeDetailPage({
             )}
           </div>
         </div>
+
+        {/* ── Gallery ──────────────────────────────────────── */}
+        {recipe.gallery && recipe.gallery.length > 0 && (
+          <section className={styles.gallery} aria-label="Photo gallery">
+            <h2 className={styles.galleryTitle}>Gallery</h2>
+            <div className={styles.galleryGrid}>
+              {recipe.gallery.map((key, idx) => (
+                <div key={idx} className={styles.galleryItem}>
+                  <Image
+                    src={r2Url(key)}
+                    alt={`${recipe.title} — photo ${idx + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className={styles.galleryImage}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </article>
   );

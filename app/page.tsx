@@ -1,16 +1,20 @@
 import Link from "next/link";
+import { getRecentRecipes } from "@/lib/recipes";
+import RecipeGrid from "@/components/RecipeGrid/RecipeGrid";
 import styles from "./page.module.css";
 
 const CATEGORIES = [
-  { slug: "airfryer", label: "Air Fryer", emoji: "♨️" },
-  { slug: "dinner", label: "Dinners", emoji: "🍽️" },
-  { slug: "vegetarian", label: "Vegetarian", emoji: "🥦" },
-  { slug: "cuisine/jamaican", label: "Jamaican", emoji: "🌿" },
-  { slug: "cuisine/indian", label: "Indian", emoji: "🍛" },
-  { slug: "cuisine/italian", label: "Italian", emoji: "🍝" },
+  { type: "category", slug: "airfryer", label: "Air Fryer", emoji: "♨️" },
+  { type: "category", slug: "dinner", label: "Dinners", emoji: "🍽️" },
+  { type: "category", slug: "vegetarian", label: "Vegetarian", emoji: "🥦" },
+  { type: "cuisine", slug: "jamaican", label: "Jamaican", emoji: "🌿" },
+  { type: "cuisine", slug: "indian", label: "Indian", emoji: "🍛" },
+  { type: "cuisine", slug: "italian", label: "Italian", emoji: "🍝" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const recentRecipes = await getRecentRecipes(6);
+
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────── */}
@@ -46,9 +50,9 @@ export default function HomePage() {
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
-                href={`/category/${cat.slug}`}
+                href={`/${cat.type}/${cat.slug}`}
                 className={styles.categoryPill}
-                id={`cat-pill-${cat.slug.replace("/", "-")}`}
+                id={`cat-pill-${cat.slug}`}
               >
                 <span className={styles.categoryEmoji} aria-hidden="true">
                   {cat.emoji}
@@ -70,14 +74,17 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Empty state — until MongoDB is connected */}
-          <div className={styles.comingSoon} role="status">
-            <span className={styles.comingSoonIcon} aria-hidden="true">🍴</span>
-            <p className={styles.comingSoonTitle}>Recipes coming soon</p>
-            <p className={styles.comingSoonText}>
-              Connect MongoDB Atlas and add your first recipe to see it here.
-            </p>
-          </div>
+          {recentRecipes.length > 0 ? (
+            <RecipeGrid recipes={recentRecipes} />
+          ) : (
+            <div className={styles.comingSoon} role="status">
+              <span className={styles.comingSoonIcon} aria-hidden="true">🍴</span>
+              <p className={styles.comingSoonTitle}>Recipes coming soon</p>
+              <p className={styles.comingSoonText}>
+                Connect MongoDB Atlas and add your first recipe to see it here.
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </>

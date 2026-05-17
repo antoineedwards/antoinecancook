@@ -1,0 +1,800 @@
+/* ═══════════════════════════════════════════════════════════
+   Admin UI — complete stylesheet
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Root shell ──────────────────────────────────────────── */
+.adminRoot {
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #e8e0d5;
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+
+/* ── Navbar ──────────────────────────────────────────────── */
+.adminNav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  height: 60px;
+  background: #111;
+  border-bottom: 1px solid #222;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.adminNavBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.adminNavLogo {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e8e0d5;
+  letter-spacing: -0.01em;
+}
+
+.adminBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: #c8623a;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.adminNavLinks {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.adminNavLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #999;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.adminNavLink:hover {
+  color: #e8e0d5;
+}
+
+.adminNavRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.viewSiteLink {
+  font-size: 0.8rem;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.viewSiteLink:hover {
+  color: #e8e0d5;
+}
+
+.logoutBtn {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #999;
+  background: none;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.logoutBtn:hover {
+  border-color: #c8623a;
+  color: #c8623a;
+}
+
+/* ── Login page ──────────────────────────────────────────── */
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+}
+
+.loginCard {
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.loginBrand {
+  text-align: center;
+}
+
+.loginTitle {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e8e0d5;
+  margin-bottom: 0.25rem;
+}
+
+.loginSub {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.loginError {
+  font-size: 0.8rem;
+  color: #e05c5c;
+  background: rgba(224, 92, 92, 0.08);
+  border: 1px solid rgba(224, 92, 92, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  color: #e8e0d5;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.loginInput:focus {
+  border-color: #c8623a;
+}
+
+.loginBtn {
+  padding: 0.75rem 1rem;
+  background: #c8623a;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.loginBtn:hover:not(:disabled) {
+  background: #b55430;
+}
+
+.loginBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.loginBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Dashboard / page shell ──────────────────────────────── */
+.adminPage {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #e8e0d5;
+  letter-spacing: -0.02em;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  background: #c8623a;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: #b55430;
+  transform: translateY(-1px);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: #999;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btnSecondary:hover {
+  border-color: #444;
+  color: #e8e0d5;
+}
+
+/* ── Recipe table ────────────────────────────────────────── */
+.recipeTable {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #0d0d0d;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.tableHeaderCell {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #555;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #1a1a1a;
+  transition: background 0.1s;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: #141414;
+}
+
+.recipeName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e8e0d5;
+}
+
+.recipeSlug {
+  font-size: 0.75rem;
+  color: #555;
+  font-family: monospace;
+  margin-top: 2px;
+}
+
+.recipeDate {
+  font-size: 0.8rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.tableActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.featuredToggle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.featuredToggle.on {
+  background: rgba(200, 98, 58, 0.15);
+  border-color: #c8623a;
+  color: #c8623a;
+}
+
+.featuredToggle.off {
+  background: transparent;
+  border-color: #2a2a2a;
+  color: #555;
+}
+
+.featuredToggle:hover {
+  opacity: 0.8;
+}
+
+.featuredToggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.emptyDash {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* ── Recipe form ─────────────────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formSection {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.formSectionTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #555;
+  margin-bottom: 1.25rem;
+}
+
+.formField {
+  margin-bottom: 1rem;
+}
+
+.formField:last-child {
+  margin-bottom: 0;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #999;
+  margin-bottom: 0.4rem;
+}
+
+.formLabelOptional {
+  font-weight: 400;
+  color: #555;
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #e8e0d5;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: #c8623a;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+.formSelect {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+/* ── Checkboxes ──────────────────────────────────────────── */
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #999;
+  padding: 0.35rem 0.75rem;
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.checkboxLabel:has(input:checked) {
+  border-color: #c8623a;
+  color: #c8623a;
+}
+
+.checkboxLabel input {
+  display: none;
+}
+
+/* ── Ingredient / step builder ───────────────────────────── */
+.builderGroup {
+  background: #0d0d0d;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.builderGroupHeader {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.builderItem {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.removeBtn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.removeBtn:hover {
+  border-color: #e05c5c;
+  color: #e05c5c;
+}
+
+.addItemBtn {
+  width: 100%;
+  padding: 0.4rem;
+  background: transparent;
+  border: 1px dashed #2a2a2a;
+  border-radius: 6px;
+  color: #555;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  margin-top: 0.25rem;
+}
+
+.addItemBtn:hover {
+  border-color: #c8623a;
+  color: #c8623a;
+}
+
+.addGroupBtn {
+  width: 100%;
+  padding: 0.6rem;
+  background: transparent;
+  border: 1px dashed #2a2a2a;
+  border-radius: 8px;
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.addGroupBtn:hover {
+  border-color: #c8623a;
+  color: #c8623a;
+}
+
+/* ── Step cards ──────────────────────────────────────────── */
+.stepCard {
+  background: #0d0d0d;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.stepNum {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c8623a;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Image upload ────────────────────────────────────────── */
+.imageUploadArea {
+  position: relative;
+  border: 2px dashed #2a2a2a;
+  border-radius: 10px;
+  padding: 2rem 1rem;
+  text-align: center;
+  transition: border-color 0.15s;
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.imageUploadArea:hover {
+  border-color: #c8623a;
+}
+
+.imageUploadArea.hasImage {
+  border-style: solid;
+  padding: 0;
+}
+
+.imageUploadIcon {
+  font-size: 2rem;
+  display: block;
+}
+
+.imageUploadText {
+  font-size: 0.85rem;
+  color: #999;
+  font-weight: 500;
+}
+
+.imageUploadSub {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.imageUploadInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.imagePreview {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.removeImageBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.removeImageBtn:hover {
+  background: #e05c5c;
+}
+
+.uploadProgress {
+  font-size: 0.8rem;
+  color: #c8623a;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* ── Toggle switch ───────────────────────────────────────── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.toggleLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #999;
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggleSlider {
+  position: absolute;
+  inset: 0;
+  background: #2a2a2a;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+
+.toggleSlider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: #555;
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.toggle input:checked + .toggleSlider {
+  background: rgba(200, 98, 58, 0.3);
+}
+
+.toggle input:checked + .toggleSlider::before {
+  transform: translateX(20px);
+  background: #c8623a;
+}
+
+/* ── Save status ─────────────────────────────────────────── */
+.saveStatus {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 0.75rem;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.saveStatus.success {
+  color: #4caf7d;
+  background: rgba(76, 175, 125, 0.1);
+}
+
+.saveStatus.error {
+  color: #e05c5c;
+  background: rgba(224, 92, 92, 0.1);
+}
+
+/* ── Gallery thumbnail grid (admin form) ─────────────────── */
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.galleryThumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+
+.galleryThumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.galleryUploadBtn {
+  min-height: 80px;
+  padding: 1rem;
+}

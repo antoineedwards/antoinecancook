@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  height: var(--navbar-height);
+  min-height: var(--navbar-height);
   background: rgba(15, 15, 15, 0.85);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -48,19 +48,13 @@
   font-weight: 500;
 }
 
-/* ── Nav links (scrollable pill row) ─────────────────────── */
+/* ── Nav links ───────────────────────────────────────────────── */
 .nav {
   flex: 1;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-1);
-}
-
-.nav::-webkit-scrollbar {
-  display: none;
 }
 
 .navItem {
@@ -129,8 +123,12 @@
     visibility var(--transition-base);
 }
 
-.navItem:hover .dropdown,
-.navDropdownTrigger:focus-visible ~ .dropdown {
+.navItem:last-child .dropdown {
+  left: auto;
+  right: 0;
+}
+
+.dropdown.dropdownOpen {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -185,13 +183,110 @@
   border-color: var(--color-border);
 }
 
-/* ── Mobile: hide nav pills, show hamburger ──────────────── */
-@media (max-width: 768px) {
-  .nav {
-    display: none;
-  }
+/* ── Desktop Default visibility ────────────────────────────── */
+.hamburger {
+  display: none;
+}
 
+.mobileMenuWrapper {
+  display: contents; /* on desktop, acts as if it doesn't exist */
+}
+
+/* ── Mobile adjustments ───────────────────────────────────── */
+@media (max-width: 768px) {
   .inner {
     gap: var(--space-4);
+  }
+  
+  /* Make the logo text a bit smaller on very small screens */
+  .logoName {
+    font-size: var(--text-base);
+  }
+
+  .logo {
+    order: 1;
+  }
+
+  /* Hamburger Button */
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    order: 3;
+  }
+
+  /* Right Actions - push to left of hamburger */
+  .actions {
+    margin-left: auto;
+    order: 2;
+  }
+
+  /* Mobile Menu Overlay */
+  .mobileMenuWrapper {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: 100%;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-4);
+    display: none; /* hidden by default */
+    flex-direction: column;
+    box-shadow: var(--shadow-card);
+  }
+
+  .mobileMenuWrapper.open {
+    display: flex;
+  }
+
+  /* Nav layout inside mobile menu */
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .navItem {
+    width: 100%;
+  }
+
+  .navLink, .navDropdownTrigger {
+    width: 100%;
+    justify-content: space-between; /* push chevron to right */
+    padding: var(--space-3) 0;
+    font-size: var(--text-base);
+  }
+
+  /* Dropdown changes inside mobile menu */
+  .dropdown {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    border-left: 2px solid var(--color-border);
+    border-radius: 0;
+    background: transparent;
+    margin-left: var(--space-2);
+    padding: var(--space-2) 0 var(--space-2) var(--space-4);
+    display: none; /* hidden when opacity 0 in css normally, but let's override */
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .dropdown.dropdownOpen {
+    display: block;
+    transform: none;
+  }
+
+  .dropdownLink {
+    padding: var(--space-2) 0;
+    font-size: var(--text-base);
   }
 }

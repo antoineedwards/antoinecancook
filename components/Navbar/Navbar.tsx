@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getDistinctCuisines, getDistinctIngredients } from "@/lib/recipes";
 import { FLAT_CATEGORIES } from "@/lib/types";
 import { capitalise } from "@/lib/utils";
+import NavDropdown from "./NavDropdown";
+import MobileMenu from "./MobileMenu";
 import styles from "./Navbar.module.css";
 
 // ── Icons ──────────────────────────────────────────────────────
@@ -10,14 +12,6 @@ function SearchIcon() {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.35-4.35" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg className={styles.chevron} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
@@ -48,92 +42,47 @@ export default async function Navbar() {
           <span className={styles.logoTagline}>Recipes</span>
         </Link>
 
-        {/* Category navigation */}
-        <nav className={styles.nav} aria-label="Recipe categories">
+        {/* Category navigation wrapped for mobile */}
+        <MobileMenu>
+          <nav className={styles.nav} aria-label="Recipe categories">
 
-          {/* Flat categories */}
-          {FLAT_CATEGORIES.map((cat) => (
-            <div key={cat.slug} className={styles.navItem}>
-              <Link
-                href={`/category/${cat.slug}`}
-                className={styles.navLink}
-                id={`nav-${cat.slug}`}
-              >
-                {cat.label}
-              </Link>
-            </div>
-          ))}
+            {/* Flat categories */}
+            {FLAT_CATEGORIES.map((cat) => (
+              <div key={cat.slug} className={styles.navItem}>
+                <Link
+                  href={`/category/${cat.slug}`}
+                  className={styles.navLink}
+                  id={`nav-${cat.slug}`}
+                >
+                  {cat.label}
+                </Link>
+              </div>
+            ))}
 
-          {/* Cuisines dropdown */}
-          <div className={styles.navItem}>
-            <button
-              className={styles.navDropdownTrigger}
-              aria-haspopup="true"
-              aria-expanded="false"
+            {/* Cuisines dropdown */}
+            <NavDropdown
               id="nav-cuisines"
-            >
-              Cuisines
-              <ChevronDownIcon />
-            </button>
-            <div className={styles.dropdown} role="menu" aria-labelledby="nav-cuisines">
-              {cuisines.length > 0 ? (
-                cuisines.map((c) => (
-                  <Link
-                    key={c}
-                    href={`/cuisine/${c}`}
-                    className={styles.dropdownLink}
-                    role="menuitem"
-                  >
-                    {capitalise(c)}
-                  </Link>
-                ))
-              ) : (
-                <>
-                  {["Jamaican", "Indian", "Italian"].map((c) => (
-                    <Link
-                      key={c}
-                      href={`/cuisine/${c.toLowerCase()}`}
-                      className={styles.dropdownLink}
-                      role="menuitem"
-                    >
-                      {c}
-                    </Link>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
+              label="Cuisines"
+              links={
+                cuisines.length > 0
+                  ? cuisines.map((c) => ({ href: `/cuisine/${c}`, label: capitalise(c) }))
+                  : ["Jamaican", "Indian", "Italian"].map((c) => ({
+                      href: `/cuisine/${c.toLowerCase()}`,
+                      label: c,
+                    }))
+              }
+            />
 
-          {/* Ingredients dropdown */}
-          <div className={styles.navItem}>
-            <button
-              className={styles.navDropdownTrigger}
-              aria-haspopup="true"
-              aria-expanded="false"
+            {/* Ingredients dropdown */}
+            <NavDropdown
               id="nav-ingredients"
-            >
-              Ingredients
-              <ChevronDownIcon />
-            </button>
-            <div className={styles.dropdown} role="menu" aria-labelledby="nav-ingredients">
-              {ingredients.length > 0 ? (
-                ingredients.map((i) => (
-                  <Link
-                    key={i}
-                    href={`/ingredient/${i}`}
-                    className={styles.dropdownLink}
-                    role="menuitem"
-                  >
-                    {capitalise(i)}
-                  </Link>
-                ))
-              ) : (
-                <span className={styles.dropdownEmpty}>Add recipes to populate</span>
-              )}
-            </div>
-          </div>
+              label="Ingredients"
+              emptyMessage="Add recipes to populate"
+              links={ingredients.map((i) => ({ href: `/ingredient/${i}`, label: capitalise(i) }))}
+            />
 
-        </nav>
+          </nav>
+        </MobileMenu>
 
         {/* Right actions */}
         <div className={styles.actions}>

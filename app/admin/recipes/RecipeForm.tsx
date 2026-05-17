@@ -27,6 +27,7 @@ interface FormData {
   tags: string;
   notes: string;
   heroImage: string;
+  gallery: string[];
   featured: boolean;
   publishedAt: string;
   ingredients: IngredientGroup[];
@@ -61,6 +62,7 @@ function buildInitialForm(recipe?: RecipeDoc): FormData {
     tags: (recipe?.tags ?? []).join(", "),
     notes: recipe?.notes ?? "",
     heroImage: recipe?.heroImage ?? "",
+    gallery: recipe?.gallery ?? [],
     featured: recipe?.featured ?? false,
     publishedAt: toDateInput(recipe?.publishedAt),
     ingredients:
@@ -75,6 +77,20 @@ function buildInitialForm(recipe?: RecipeDoc): FormData {
 }
 
 // ── Image Upload Hook ────────────────────────────────────────
+/** Convert HEIC/HEIF to JPEG in the browser before uploading. */
+async function convertIfHEIC(file: File): Promise<File> {
+  const name = file.name.toLowerCase();
+  if (!name.endsWith(".heic") && !name.endsWith(".heif") && file.type !== "image/heic" && file.type !== "image/heif") {
+    return file;
+  }
+  // Lazy-load heic2any only when needed
+  const heic2any = (await import("heic2any")).default;
+  const blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.88 });
+  const jpegBlob = Array.isArray(blob) ? blob[0] : blob;
+  const jpegName = file.name.replace(/\.hei[cf]$/i, ".jpg");
+  return new File([jpegBlob], jpegName, { type: "image/jpeg" });
+}
+
 function useImageUpload(slug: string) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState("");
@@ -84,9 +100,12 @@ function useImageUpload(slug: string) {
       setUploading(true);
       setProgress("Getting upload URL…");
       try {
+        // Convert HEIC → JPEG client-side before anything else
+        const convertedFile = await convertIfHEIC(file);
+
         const params = new URLSearchParams({
-          filename: file.name,
-          type: file.type,
+          filename: convertedFile.name,
+          type: convertedFile.type,
           slug,
         });
         const res = await fetch(`/api/admin/upload-url?${params}`);
@@ -96,8 +115,8 @@ function useImageUpload(slug: string) {
         setProgress("Uploading…");
         const uploadRes = await fetch(uploadUrl, {
           method: "PUT",
-          body: file,
-          headers: { "Content-Type": file.type },
+          body: convertedFile,
+          headers: { "Content-Type": convertedFile.type },
         });
         if (!uploadRes.ok) throw new Error("Upload failed");
         setProgress("");
@@ -125,10 +144,16 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
   const router = useRouter();
   const [form, setForm] = useState<FormData>(buildInitialForm(recipe));
   const [saving, setSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<"" | "saved" | "error">("");
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [heroPreview, setHeroPreview] = useState<string | null>(
     recipe?.heroImage ? r2Url(recipe.heroImage) : null
   );
+  // Gallery: parallel arrays — keys (saved to DB) + preview URLs (blob or R2)
+  const [galleryPreviews, setGalleryPreviews] = useState<string[]>(
+    (recipe?.gallery ?? []).map(r2Url)
+  );
+  const [galleryUploading, setGalleryUploading] = useState(false);
 
   const slugForUpload = form.title
     ? form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
@@ -243,11 +268,39 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
     setField("heroImage", "");
   }
 
+  // ── Gallery upload ─────────────────────────────────────────
+  async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+    setGalleryUploading(true);
+    for (const file of files) {
+      const preview = URL.createObjectURL(file);
+      // Optimistically add preview
+      setGalleryPreviews((p) => [...p, preview]);
+      const key = await uploadFile(file);
+      if (key) {
+        setForm((f) => ({ ...f, gallery: [...f.gallery, key] }));
+      } else {
+        // Remove optimistic preview on failure
+        setGalleryPreviews((p) => p.filter((u) => u !== preview));
+      }
+    }
+    setGalleryUploading(false);
+    // Reset input so same file can be re-added
+    e.target.value = "";
+  }
+
+  function removeGalleryImage(idx: number) {
+    setForm((f) => ({ ...f, gallery: f.gallery.filter((_, i) => i !== idx) }));
+    setGalleryPreviews((p) => p.filter((_, i) => i !== idx));
+  }
+
   // ── Submit ─────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
-    setSaveStatus("");
+    setSaveError(null);
+    setSaveSuccess(false);
 
     const payload = {
       ...form,
@@ -278,13 +331,16 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
         });
       }
 
-      if (!res.ok) throw new Error("Save failed");
-      setSaveStatus("saved");
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error ?? "Save failed");
+      }
+      setSaveSuccess(true);
       if (mode === "new") {
         router.push("/admin/dashboard");
       }
-    } catch {
-      setSaveStatus("error");
+    } catch (err: unknown) {
+      setSaveError(err instanceof Error ? err.message : "Save failed. Try again.");
     } finally {
       setSaving(false);
     }
@@ -540,7 +596,7 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
                   <p className={styles.imageUploadSub}>JPEG, PNG, WebP · Max 10 MB</p>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/*,.heic,.heif"
                     className={styles.imageUploadInput}
                     onChange={handleHeroUpload}
                     disabled={uploading}
@@ -550,6 +606,51 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
               )}
             </div>
             {progress && <p className={styles.uploadProgress}>{progress}</p>}
+          </div>
+
+          {/* Gallery */}
+          <div className={styles.formSection}>
+            <h2 className={styles.formSectionTitle}>
+              Gallery <span className={styles.formLabelOptional}>(optional · multiple)</span>
+            </h2>
+
+            {galleryPreviews.length > 0 && (
+              <div className={styles.galleryGrid}>
+                {galleryPreviews.map((src, idx) => (
+                  <div key={idx} className={styles.galleryThumb}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={src} alt={`Gallery ${idx + 1}`} className={styles.galleryThumbImg} />
+                    <button
+                      type="button"
+                      className={styles.removeImageBtn}
+                      onClick={() => removeGalleryImage(idx)}
+                      aria-label={`Remove gallery image ${idx + 1}`}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <label
+              className={`${styles.imageUploadArea} ${styles.galleryUploadBtn}`}
+              aria-label="Add gallery images"
+            >
+              <span className={styles.imageUploadIcon} aria-hidden="true">＋</span>
+              <p className={styles.imageUploadText}>
+                {galleryUploading ? "Uploading…" : "Add photos"}
+              </p>
+              <p className={styles.imageUploadSub}>Select multiple files</p>
+              <input
+                type="file"
+                accept="image/*,.heic,.heif"
+                multiple
+                className={styles.imageUploadInput}
+                onChange={handleGalleryUpload}
+                disabled={uploading || galleryUploading}
+              />
+            </label>
           </div>
 
           {/* Publish Settings */}
@@ -592,11 +693,11 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
             >
               {saving ? "Saving…" : mode === "new" ? "Publish Recipe" : "Save Changes"}
             </button>
-            {saveStatus === "saved" && (
+            {saveSuccess && (
               <p className={`${styles.saveStatus} ${styles.success}`}>✓ Saved successfully</p>
             )}
-            {saveStatus === "error" && (
-              <p className={`${styles.saveStatus} ${styles.error}`}>✗ Save failed. Try again.</p>
+            {saveError && (
+              <p className={`${styles.saveStatus} ${styles.error}`}>✗ {saveError}</p>
             )}
           </div>
         </div>
