@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/recipes/[slug]/edit/page": "app/admin/recipes/[slug]/edit/page.js",
+  "/admin/recipes/new/page": "app/admin/recipes/new/page.js",
+  "/api/admin/login/route": "app/api/admin/login/route.js",
+  "/api/admin/logout/route": "app/api/admin/logout/route.js",
+  "/api/admin/recipes/[slug]/route": "app/api/admin/recipes/[slug]/route.js",
+  "/api/admin/recipes/route": "app/api/admin/recipes/route.js",
+  "/api/admin/upload-url/route": "app/api/admin/upload-url/route.js",
+  "/api/recipes/[slug]/route": "app/api/recipes/[slug]/route.js",
+  "/api/recipes/route": "app/api/recipes/route.js",
+  "/category/[slug]/page": "app/category/[slug]/page.js",
+  "/cuisine/[slug]/page": "app/cuisine/[slug]/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/ingredient/[slug]/page": "app/ingredient/[slug]/page.js",
+  "/page": "app/page.js",
+  "/recipes/[slug]/page": "app/recipes/[slug]/page.js",
+  "/recipes/page": "app/recipes/page.js",
+  "/search/page": "app/search/page.js"
+}

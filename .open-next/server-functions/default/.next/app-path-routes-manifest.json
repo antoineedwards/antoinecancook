@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/dashboard/page": "/admin/dashboard",
+  "/admin/page": "/admin",
+  "/admin/recipes/[slug]/edit/page": "/admin/recipes/[slug]/edit",
+  "/admin/recipes/new/page": "/admin/recipes/new",
+  "/api/admin/login/route": "/api/admin/login",
+  "/api/admin/logout/route": "/api/admin/logout",
+  "/api/admin/recipes/[slug]/route": "/api/admin/recipes/[slug]",
+  "/api/admin/recipes/route": "/api/admin/recipes",
+  "/api/admin/upload-url/route": "/api/admin/upload-url",
+  "/api/recipes/[slug]/route": "/api/recipes/[slug]",
+  "/api/recipes/route": "/api/recipes",
+  "/category/[slug]/page": "/category/[slug]",
+  "/cuisine/[slug]/page": "/cuisine/[slug]",
+  "/favicon.ico/route": "/favicon.ico",
+  "/ingredient/[slug]/page": "/ingredient/[slug]",
+  "/page": "/",
+  "/recipes/[slug]/page": "/recipes/[slug]",
+  "/recipes/page": "/recipes",
+  "/search/page": "/search"
+}
