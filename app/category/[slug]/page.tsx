@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   
   return {
     title: `${label} Recipes`,
-    description: `Browse all our delicious ${label.toLowerCase()} recipes.`,
+    description: `Browse all my ${label.toLowerCase()} recipes.`,
   };
 }
 
@@ -51,7 +51,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
         <header className={styles.header}>
           <p className={styles.eyebrow}>Category</p>
           <h1 className={styles.title}>{label}</h1>
-          <p className={styles.subtitle}>Explore our favorite {label.toLowerCase()} meals.</p>
+          <p className={styles.subtitle}>Explore my favorite {label.toLowerCase()} meals.</p>
         </header>
 
         <Suspense fallback={<RecipeGridSkeleton count={9} />}>

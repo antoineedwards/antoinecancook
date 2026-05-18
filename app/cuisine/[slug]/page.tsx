@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   
   return {
     title: `${label} Cuisine`,
-    description: `Browse all our delicious ${label} recipes.`,
+    description: `Browse all my ${label} recipes.`,
   };
 }
 

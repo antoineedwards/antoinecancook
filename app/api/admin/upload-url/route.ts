@@ -19,7 +19,11 @@ export async function GET(req: NextRequest) {
 
   const ext = filename.split(".").pop() ?? "jpg";
   const key = `recipes/${slugify(recipeSlug)}/${Date.now()}.${ext}`;
-  const uploadUrl = await getUploadUrl(key, contentType);
-
-  return NextResponse.json({ uploadUrl, key });
+  try {
+    const uploadUrl = await getUploadUrl(key, contentType);
+    return NextResponse.json({ uploadUrl, key });
+  } catch (error: any) {
+    console.error("Upload URL Error:", error);
+    return NextResponse.json({ error: error.message || "Failed to generate upload URL" }, { status: 500 });
+  }
 }

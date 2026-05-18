@@ -596,7 +596,7 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
                   <p className={styles.imageUploadSub}>JPEG, PNG, WebP · Max 10 MB</p>
                   <input
                     type="file"
-                    accept="image/*,.heic,.heif"
+                    accept="image/*, image/heic, image/heif, .heic, .heif, .HEIC, .HEIF"
                     className={styles.imageUploadInput}
                     onChange={handleHeroUpload}
                     disabled={uploading}
@@ -644,7 +644,7 @@ export default function RecipeForm({ recipe, mode }: RecipeFormProps) {
               <p className={styles.imageUploadSub}>Select multiple files</p>
               <input
                 type="file"
-                accept="image/*,.heic,.heif"
+                accept="image/*, image/heic, image/heif, .heic, .heif, .HEIC, .HEIF"
                 multiple
                 className={styles.imageUploadInput}
                 onChange={handleGalleryUpload}
