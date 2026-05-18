@@ -157,6 +157,36 @@
   transform: translateX(4px);
 }
 
+.heroActions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.heroSocial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.heroSocial:hover {
+  color: var(--color-text);
+  background: var(--color-surface-3);
+  border-color: var(--color-border-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
 /* ── Section Base ─────────────────────────────────────────── */
 .section {
   padding: var(--space-20) 0;
