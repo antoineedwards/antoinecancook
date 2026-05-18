@@ -45,7 +45,7 @@ export default async function CuisinePage({ params }: { params: Params }) {
         <header className={styles.header}>
           <p className={styles.eyebrow}>Cuisine</p>
           <h1 className={styles.title}>{label}</h1>
-          <p className={styles.subtitle}>Explore authentic {label} flavors.</p>
+          <p className={styles.subtitle}>Explore my favorite {label} dishes.</p>
         </header>
 
         <Suspense fallback={<RecipeGridSkeleton count={9} />}>
