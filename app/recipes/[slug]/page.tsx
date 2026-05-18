@@ -6,15 +6,7 @@ import { getRecipeBySlug, getAllRecipes } from "@/lib/recipes";
 import { r2Url, formatDate, capitalise } from "@/lib/utils";
 import styles from "./page.module.css";
 
-// ── Static params for ISR/SSG ──────────────────────────────
-export async function generateStaticParams() {
-  try {
-    const recipes = await getAllRecipes();
-    return recipes.map((r) => ({ slug: r.slug }));
-  } catch {
-    return [];
-  }
-}
+export const dynamic = "force-dynamic";
 
 // ── Metadata ───────────────────────────────────────────────
 export async function generateMetadata({

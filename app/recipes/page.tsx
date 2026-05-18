@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Browse every recipe — from Jamaican and Indian to Italian, Air Fryer meals, and vegetarian dishes.",
 };
 
+export const dynamic = "force-dynamic";
+
 async function RecipesContent() {
   const recipes = await getAllRecipes();
 

@@ -2,13 +2,23 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const COOKIE_NAME = "admin_session";
-const SESSION_VALUE = "authenticated";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
+
+/** Generate a secure session value based on the secret */
+async function getSessionValue() {
+  const secret = process.env.ADMIN_SECRET || "default_fallback_secret_do_not_use";
+  const data = new TextEncoder().encode(secret + "_salt");
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
 
 /** Set the admin session cookie (called after successful login). */
 export async function setAdminSession() {
   const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, SESSION_VALUE, {
+  const val = await getSessionValue();
+  cookieStore.set(COOKIE_NAME, val, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -26,7 +36,8 @@ export async function clearAdminSession() {
 /** Returns true if the current request has a valid admin session. */
 export async function isAdminAuthenticated(): Promise<boolean> {
   const cookieStore = await cookies();
-  return cookieStore.get(COOKIE_NAME)?.value === SESSION_VALUE;
+  const val = await getSessionValue();
+  return cookieStore.get(COOKIE_NAME)?.value === val;
 }
 
 /** Throws a redirect to /admin if not authenticated. Use in Server Components. */

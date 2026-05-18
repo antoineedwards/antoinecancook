@@ -7,6 +7,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import styles from "../../recipes/page.module.css";
 
+export const dynamic = "force-dynamic";
+
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {

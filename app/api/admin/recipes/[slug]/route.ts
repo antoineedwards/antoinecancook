@@ -79,9 +79,16 @@ export async function PATCH(
   const body = await req.json();
   const db = await getDb();
 
-  await db
-    .collection<Recipe>("recipes")
-    .updateOne({ slug }, { $set: body });
+  const update: Record<string, any> = {};
+  if (typeof body.featured === "boolean") {
+    update.featured = body.featured;
+  }
+
+  if (Object.keys(update).length > 0) {
+    await db
+      .collection<Recipe>("recipes")
+      .updateOne({ slug }, { $set: update });
+  }
 
   return NextResponse.json({ ok: true });
 }

@@ -3,6 +3,8 @@ import { getRecentRecipes } from "@/lib/recipes";
 import RecipeGrid from "@/components/RecipeGrid/RecipeGrid";
 import styles from "./page.module.css";
 
+export const dynamic = "force-dynamic";
+
 const CATEGORIES = [
   { type: "category", slug: "airfryer", label: "Air Fryer", emoji: "♨️" },
   { type: "category", slug: "dinner", label: "Dinners", emoji: "🍽️" },
