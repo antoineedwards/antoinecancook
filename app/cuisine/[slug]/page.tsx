@@ -12,7 +12,7 @@ type Params = Promise<{ slug: string }>;
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const label = capitalise(slug);
-  
+
   return {
     title: `${label} Cuisine`,
     description: `Browse all my ${label} recipes.`,

@@ -57,5 +57,7 @@ export interface NavCategory {
 export const FLAT_CATEGORIES: NavCategory[] = [
   { slug: "airfryer", label: "Air Fryer", type: "flat" },
   { slug: "dinner",   label: "Dinners",   type: "flat" },
+  { slug: "breakfast", label: "Breakfast", type: "flat"},
+  { slug: "dessert", label: "Dessert", type: "flat" },
   { slug: "vegetarian", label: "Vegetarian", type: "flat" },
 ];

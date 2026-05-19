@@ -121,7 +121,7 @@
 
 /* ── Sidebar ─────────────────────────────────────────────── */
 .sidebar {
-  position: sticky;
+  position: relative;
   top: calc(var(--navbar-height) + var(--space-6));
 }
 

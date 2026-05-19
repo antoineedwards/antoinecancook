@@ -37,6 +37,8 @@ interface FormData {
 const CATEGORIES = [
   { value: "airfryer", label: "Air Fryer" },
   { value: "dinner", label: "Dinner" },
+  { value: "breakfast", label: "Breakfast"},
+  { value: "dessert", label: "Dessert" },
   { value: "vegetarian", label: "Vegetarian" },
 ];
 
