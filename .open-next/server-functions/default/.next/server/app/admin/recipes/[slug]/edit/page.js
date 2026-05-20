@@ -1,10 +1,10 @@
 var R=require("../../../../../chunks/ssr/[turbopack]_runtime.js")("server/app/admin/recipes/[slug]/edit/page.js")
-R.c("server/chunks/ssr/[root-of-the-server]__07q5qpe._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0ube.c3._.js")
 R.c("server/chunks/ssr/_0mm5~ly._.js")
 R.c("server/chunks/ssr/node_modules_next_dist_11dij6w._.js")
-R.c("server/chunks/ssr/node_modules_next_dist_09jzzl8._.js")
-R.c("server/chunks/ssr/node_modules_next_dist_esm_build_templates_app-page_0x4c5x~.js")
-R.c("server/chunks/ssr/[root-of-the-server]__0y_7kc8._.js")
+R.c("server/chunks/ssr/node_modules_next_dist_06u0kr8._.js")
+R.c("server/chunks/ssr/node_modules_next_dist_esm_build_templates_app-page_04sh.x0.js")
+R.c("server/chunks/ssr/[root-of-the-server]__03uj_~v._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__090jxzh._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__01aitpg._.js")
 R.c("server/chunks/ssr/app_error_tsx_11t4ysq._.js")
@@ -14,5 +14,5 @@ R.c("server/chunks/ssr/node_modules_next_dist_client_components_builtin_unauthor
 R.c("server/chunks/ssr/app_global-error_tsx_0m9qisk._.js")
 R.c("server/chunks/ssr/app_admin_0uggk95._.js")
 R.c("server/chunks/ssr/_next-internal_server_app_admin_recipes_[slug]_edit_page_actions_0fjl-3o.js")
-R.m(63233)
-module.exports=R.m(63233).exports
+R.m(48697)
+module.exports=R.m(48697).exports

@@ -14,7 +14,7 @@
   "/api/recipes/route": "/api/recipes",
   "/category/[slug]/page": "/category/[slug]",
   "/cuisine/[slug]/page": "/cuisine/[slug]",
-  "/favicon.ico/route": "/favicon.ico",
+  "/icon.svg/route": "/icon.svg",
   "/ingredient/[slug]/page": "/ingredient/[slug]",
   "/page": "/",
   "/recipes/[slug]/page": "/recipes/[slug]",

@@ -14,7 +14,7 @@
   "/api/recipes/route": "app/api/recipes/route.js",
   "/category/[slug]/page": "app/category/[slug]/page.js",
   "/cuisine/[slug]/page": "app/cuisine/[slug]/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
   "/ingredient/[slug]/page": "app/ingredient/[slug]/page.js",
   "/page": "app/page.js",
   "/recipes/[slug]/page": "app/recipes/[slug]/page.js",
